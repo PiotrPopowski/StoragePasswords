@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="StoragePasswords.WindowTitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoragePasswords"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="518.6">
+    <Grid x:Name="main">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle x:Name="TitleRect" Width="{Binding ElementName=main, Path=ActualWidth}" Height="{Binding ElementName=main, Path=ActualHeight}" Fill="#FF400F0F" HorizontalAlignment="Right" MouseDown="Rectangle_MouseDown" Grid.ColumnSpan="3" Margin="0" />
+        <TextBlock Text="{Binding Title}" MouseDown="Rectangle_MouseDown" Grid.Column="0" Margin="5,2,0,0" Foreground="#FFFF9A9A" FontSize="16"/>
+        <StackPanel Orientation="Horizontal" Height="25" VerticalAlignment="Bottom" Grid.Column="2" Margin="0" d:LayoutOverrides="Width">
+            <Button x:Name="minimizeBtn" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="minimizeBtn_Click" Margin="0,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FF5D7E88"/>
+                        <Setter Property="Foreground" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Grid>
+                                        <Rectangle Width="25" Height="25" Fill="{TemplateBinding Foreground}" StrokeThickness="0"/>
+                                        <Rectangle Width="20" Height="4" Fill="{TemplateBinding Background}" VerticalAlignment="Bottom" Margin="0,0,0,5" RenderTransformOrigin="0.5,0.5" RadiusY="0" RadiusX="0"/>
+
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF16F4E8"/>
+                                <Setter Property="Foreground" Value="#FF7C2222"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </Button.Style>
+            </Button>
+            <Button x:Name="closeBtn" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Click="closeBtn_Click" Margin="0,0,0,0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFA51414"/>
+                        <Setter Property="Foreground" Value="{x:Null}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Grid>
+                                        <Rectangle Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="{TemplateBinding Foreground}" StrokeThickness="0"/>
+                                        <Rectangle Width="20" Height="4" Fill="{TemplateBinding Background}"  RenderTransformOrigin="0.5,0.5" RadiusY="0" RadiusX="0">
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="50"/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
+                                        <Rectangle Width="20" Height="4" Fill="{TemplateBinding Background}"  RenderTransformOrigin="0.5,0.5" RadiusY="0" RadiusX="0">
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <RotateTransform Angle="130"/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                                <Setter Property="Foreground" Value="#FF7C2222"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
