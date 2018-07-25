@@ -25,11 +25,34 @@ namespace StoragePasswords.Views
         public LoginForm()
         {
             InitializeComponent();
+            Reset();
         }
+
+        private bool loginChanged;
+        private bool passwordChanged;
+
         public override void Reset()
         {
             Login.Text = "Login";
             Password.Password = "******";
+            loginChanged = false;
+            passwordChanged = false;
+        }
+        public void ClearLogin(object sender, EventArgs e)
+        {
+            if (!loginChanged)
+            {
+                Login.Text = "";
+                loginChanged = true;
+            }
+        }
+        public void ClearPassword(object sender, EventArgs e)
+        {
+            if (!passwordChanged)
+            {
+                Password.Password = "";
+                passwordChanged = true;
+            }
         }
     }
 }

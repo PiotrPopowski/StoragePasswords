@@ -27,7 +27,12 @@ namespace StoragePasswords.Views
             InitializeComponent();
             _context = new ViewModels.CoreViewModel(typeof(LoginForm));
             DataContext = _context;
+            this.Closing += SaveCurrentState;
         }
-        
+
+        private void SaveCurrentState(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _context.SaveAndEncrypt();
+        }
     }
 }

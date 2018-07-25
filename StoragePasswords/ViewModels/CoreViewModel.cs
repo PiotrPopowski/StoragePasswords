@@ -19,11 +19,14 @@ namespace StoragePasswords.ViewModels
         {
             PswFileName = "Passwords";
             OpenViews = new ObservableCollection<ViewBase>();
+
             OpenNewWindow = new OpenWindowCommand(SetView);
             CreateAccount = new CreateAccountCommand(AccountWizard);
             Login = new LoginCommand(LoginToAccount);
+            ShowPopup = new OpenWindowCommand(SetPopup);
+
             passwordManager = new PasswordProvider();
-            mediator = new ConcreteMediator(OpenNewWindow);
+            mediator = new ConcreteMediator(OpenNewWindow,ShowPopup);
             mediator.Register(this);
         }
         public CoreViewModel(Type initialView) : this()
@@ -41,9 +44,12 @@ namespace StoragePasswords.ViewModels
             get { return _CurrentView; }
             set { _CurrentView = value; RaiseChangedEvent(this, "CurrentView"); }
         }
+
         public OpenWindowCommand OpenNewWindow { get; private set; }
         public CreateAccountCommand CreateAccount { get; private set; }
+        public OpenWindowCommand ShowPopup { get; private set; }
         public LoginCommand Login { get; private set; }
+        
         public PasswordListViewModel SecretContentViewModel {get;private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,6 +62,7 @@ namespace StoragePasswords.ViewModels
 
         public void SetView(Type view)
         {
+            
             foreach (ViewBase openView in OpenViews)
                 if (openView.GetType().Equals(view))
                 {
@@ -75,6 +82,13 @@ namespace StoragePasswords.ViewModels
             }
             OpenViews.Add(CurrentView);
         }
+
+        public void SetPopup(Type popup)
+        {
+            var window = Activator.CreateInstance(popup) as PopupWindow;
+            window.DataContext = CurrentView;
+            window.ShowDialog();
+        }
         public void CreateEncryptedFile(string login, string password)
         {
             passwordManager = new PasswordProvider(
@@ -84,6 +98,7 @@ namespace StoragePasswords.ViewModels
             passwordManager.Encrypt();
             passwordManager.Save(PswFileName);
         }
+
         public void AccountWizard(string login, string password, string confirmedPassword)
         {
             if (!password.Equals(confirmedPassword))
@@ -102,6 +117,7 @@ namespace StoragePasswords.ViewModels
             System.Windows.MessageBox.Show("Account created");
 
         }
+
         public void LoginToAccount(string login, string password)
         {
             if(login.Length<8 || password.Length<8)
@@ -118,6 +134,15 @@ namespace StoragePasswords.ViewModels
                 mediator.SendTo(this, typeof(PasswordListViewModel), new object[] { passwordManager.Passwords });
             }
             else System.Windows.MessageBox.Show("Incorrect login or password");
+        }
+
+        public void SaveAndEncrypt()
+        {
+            if (passwordManager.Passwords != null)
+            {
+                passwordManager.Encrypt();
+                passwordManager.Save(PswFileName);
+            }
         }
 
         public void Receive(object sender, object[] argument)

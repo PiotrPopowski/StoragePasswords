@@ -32,7 +32,7 @@ namespace StoragePasswords.Models
                 }
                 memoryStream.Close();
             }
-            return Convert.ToBase64String(cipherTextBytes.Take(32).ToArray());
+            return Convert.ToBase64String(cipherTextBytes.ToArray());
 
         }
 

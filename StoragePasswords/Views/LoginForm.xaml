@@ -27,8 +27,8 @@
                 </VisualBrush>
             </Border.BorderBrush>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <TextBox x:Name="Login" Width="400" Height="40" Text="Login" FontFamily="Sylfaen" FontSize="28"/>
-                <PasswordBox x:Name="Password" Width="400" Height="40" Margin="0,5,0,0" Password="*******" FontSize="28"/>
+                <TextBox x:Name="Login" GotFocus="ClearLogin" Width="400" Height="40" Text="Login" FontFamily="Sylfaen" FontSize="28"/>
+                <PasswordBox x:Name="Password" GotFocus="ClearPassword" Width="400" Height="40" Margin="0,5,0,0" Password="*******" FontSize="28"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Command="{Binding OpenNewWindow}" CommandParameter="{x:Type views:AccWizard}" Height="40" Width="150" Content="Create Account" Margin="5" FontSize="20" FontFamily="Sylfaen">
                         <Button.Style>

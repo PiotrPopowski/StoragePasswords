@@ -36,9 +36,11 @@ namespace StoragePasswords.Models
         public void Decrypt(string password,string login)
         {
             string saltKey = CryptographyService.Decrypt(Passwords.SaltKey, password, Passwords.VIKey, login);
+            string encryptedLogin = CryptographyService.Encrypt(login, password, Passwords.VIKey, saltKey);
+            string encryptedPassword = CryptographyService.Encrypt(password, login, Passwords.VIKey, saltKey);
 
             ObservableCollection<string> pswdCollection = new ObservableCollection<string>();
-            pswdCollection = CryptographyService.Decrypt(Passwords.Collection, password, Passwords.VIKey, saltKey);
+            pswdCollection = CryptographyService.Decrypt(Passwords.Collection, password, saltKey, login); //salt
             Passwords = new Passwords(login, password, saltKey, Passwords.VIKey, pswdCollection);
         }
         public void Encrypt()
@@ -52,7 +54,7 @@ namespace StoragePasswords.Models
 
             ObservableCollection<string> pswCollection=
                 CryptographyService.Encrypt(
-                    Passwords.Collection,Passwords.MainPassword,Passwords.SaltKey,Passwords.Login);
+                    Passwords.Collection,Passwords.MainPassword,Passwords.SaltKey,Passwords.Login); //salt
 
             Passwords = new Passwords(login, mainPassword, saltKey, Passwords.VIKey,pswCollection);
         }
