@@ -1,4 +1,5 @@
 ﻿using StoragePasswords.Common;
+using StoragePasswords.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace StoragePasswords.Views
         public Settings()
         {
             InitializeComponent();
+            TargetDataContext = typeof(SettingsViewModel);
         }
+        public override Type TargetDataContext { get => base.TargetDataContext; set => base.TargetDataContext = value; }
     }
 }

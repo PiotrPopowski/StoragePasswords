@@ -14,5 +14,6 @@ namespace StoragePasswords.Common
         {
 
         }
+        public virtual Type TargetDataContext { get; set; }
     }
 }

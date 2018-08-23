@@ -11,16 +11,14 @@ namespace StoragePasswords.Models
 {
     class ConcreteMediator : IMediator
     {
-        public ConcreteMediator(OpenWindowCommand openWindowCommand, OpenWindowCommand showPopup)
+        public ConcreteMediator(OpenWindowCommand openWindowCommand)
         {
             ViewModelList = new List<IViewModel>();
             OpenNewWindow = openWindowCommand;
-            ShowPopup = showPopup;
         }
         private ViewBase _currentView;
         public ViewBase CurrentView { get { return _currentView; } set { _currentView = value; } }
         public OpenWindowCommand OpenNewWindow { get; private set; }
-        public OpenWindowCommand ShowPopup { get; private set; }
         private List<IViewModel> _viewModelList= new List<IViewModel>();
         public List<IViewModel> ViewModelList
         {

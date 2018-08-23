@@ -49,7 +49,7 @@ namespace StoragePasswords.ViewModels
             this.mediator = mediator;
             this.mediator.Register(this);
             OpenNewWindow = mediator.OpenNewWindow;
-            ShowPopup = mediator.ShowPopup;
+            ShowPopup = new OpenWindowCommand(ShowSettings);
             CurrentView = mediator.CurrentView;
         }
 
@@ -62,6 +62,13 @@ namespace StoragePasswords.ViewModels
             MessageBoxResult result = MessageBox.Show("Do you want to permanently remove the password?", "Confirmation", MessageBoxButton.YesNo,MessageBoxImage.Warning,MessageBoxResult.No,MessageBoxOptions.DefaultDesktopOnly);
             if(result==MessageBoxResult.Yes)
                 Data.Remove(lv);
+        }
+
+        public void ShowSettings(Type popup)
+        {
+            var window = Activator.CreateInstance(popup) as PopupWindow;
+            window.DataContext = new SettingsViewModel(accountData);
+            window.ShowDialog();
         }
 
         public void Receive(object sender, object[] arguments)

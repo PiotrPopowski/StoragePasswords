@@ -23,10 +23,9 @@ namespace StoragePasswords.ViewModels
             OpenNewWindow = new OpenWindowCommand(SetView);
             CreateAccount = new CreateAccountCommand(AccountWizard);
             Login = new LoginCommand(LoginToAccount);
-            ShowPopup = new OpenWindowCommand(SetPopup);
 
             passwordManager = new PasswordProvider();
-            mediator = new ConcreteMediator(OpenNewWindow,ShowPopup);
+            mediator = new ConcreteMediator(OpenNewWindow);
             mediator.Register(this);
         }
         public CoreViewModel(Type initialView) : this()
@@ -47,7 +46,6 @@ namespace StoragePasswords.ViewModels
 
         public OpenWindowCommand OpenNewWindow { get; private set; }
         public CreateAccountCommand CreateAccount { get; private set; }
-        public OpenWindowCommand ShowPopup { get; private set; }
         public LoginCommand Login { get; private set; }
         
         public PasswordListViewModel SecretContentViewModel {get;private set; }
@@ -81,13 +79,6 @@ namespace StoragePasswords.ViewModels
                 CurrentView.DataContext = Convert.ChangeType(context, type);
             }
             OpenViews.Add(CurrentView);
-        }
-
-        public void SetPopup(Type popup)
-        {
-            var window = Activator.CreateInstance(popup) as PopupWindow;
-            window.DataContext = CurrentView;
-            window.ShowDialog();
         }
         public void CreateEncryptedFile(string login, string password)
         {

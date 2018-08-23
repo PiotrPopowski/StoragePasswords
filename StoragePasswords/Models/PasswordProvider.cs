@@ -58,6 +58,10 @@ namespace StoragePasswords.Models
 
             Passwords = new Passwords(login, mainPassword, saltKey, Passwords.VIKey,pswCollection);
         }
+        public void ChangePassword(string newPassword)
+        {
+            Passwords.MainPassword = newPassword;
+        }
         public void Load(string fileName)
         {
             Passwords= BinaryIOService.Load(fileName) as Passwords;

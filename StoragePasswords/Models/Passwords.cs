@@ -29,10 +29,10 @@ namespace StoragePasswords.Models
             Collection = passwordCollection;
         }
 
-        public string Login { get; }
-        public string MainPassword { get; }
-        public string SaltKey { get;}
-        public string VIKey { get; }
+        public string Login { get; set; }
+        public string MainPassword { get; set; }
+        public string SaltKey { get; set; }
+        public string VIKey { get; set; }
 
         public ObservableCollection<string> Collection { get; }
     }

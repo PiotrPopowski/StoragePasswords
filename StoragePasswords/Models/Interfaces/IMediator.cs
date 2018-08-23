@@ -11,7 +11,6 @@ namespace StoragePasswords.Models.Interfaces
         List<IViewModel> ViewModelList { get;}
         ViewBase CurrentView { get; }
         OpenWindowCommand OpenNewWindow { get; }
-        OpenWindowCommand ShowPopup { get; }
         void UpdateCurrentView(IViewModel sender);
         void Register(IViewModel viewModel);
         void SendTo(object from, IViewModel to, object[] data);

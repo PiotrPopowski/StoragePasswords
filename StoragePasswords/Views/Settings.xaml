@@ -2,12 +2,56 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:common="clr-namespace:StoragePasswords.Common"
+        xmlns:converters="clr-namespace:StoragePasswords.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StoragePasswords.Views"
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="400">
+        Title="Settings" Height="450" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <converters:MultipleValueConverter x:Key="ValueConverter"/>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Account" />
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="5,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Change Password" FontFamily="Segoe UI Semibold" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="16" />
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <TextBlock Text="Current Password:"/>
+                <TextBlock Text="New Password: " Margin="0,5"/>
+                <TextBlock Text="Repeat Password:"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
+                <PasswordBox Name="CurrentPassword" Width="200"/>
+                <PasswordBox Name="NewPassword" Width="200" Margin="0,5"/>
+                <PasswordBox Name="RepeatPassword" Width="200"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="2">
+            <Button Content="Accept" Command="{Binding ChangeMainPassword}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource ValueConverter}">
+                        <Binding ElementName="CurrentPassword"/>
+                        <Binding ElementName="NewPassword"/>
+                        <Binding ElementName="RepeatPassword"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </StackPanel>
     </Grid>
 </common:PopupWindow>
